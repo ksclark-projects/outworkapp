@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "outworkapp",
+  "project_id": "9535bd69-55f1-4f43-8073-e98ead9177be"
+}
