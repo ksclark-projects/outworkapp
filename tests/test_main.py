@@ -1,6 +1,6 @@
 import re
 
-from main import get_version_string
+from main import get_version_dict, get_version_string
 
 
 def test_get_version_string_format():
@@ -10,3 +10,29 @@ def test_get_version_string_format():
     assert re.match(pattern, result), (
         f"Expected format 'Python version: X.Y.Z', got: {result!r}"
     )
+
+
+def test_get_version_dict_keys():
+    """Verify get_version_dict returns a dict with the expected keys."""
+    result = get_version_dict()
+    assert isinstance(result, dict)
+    assert set(result.keys()) == {"major", "minor", "micro"}
+
+
+def test_get_version_dict_values_are_ints():
+    """Verify get_version_dict values are all integers."""
+    result = get_version_dict()
+    assert isinstance(result["major"], int)
+    assert isinstance(result["minor"], int)
+    assert isinstance(result["micro"], int)
+
+
+def test_get_version_dict_matches_version_string():
+    """Verify get_version_dict values are consistent with get_version_string."""
+    import sys
+
+    v = sys.version_info
+    result = get_version_dict()
+    assert result["major"] == v.major
+    assert result["minor"] == v.minor
+    assert result["micro"] == v.micro
