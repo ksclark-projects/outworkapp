@@ -16,7 +16,14 @@ def test_get_version_dict_keys():
     """Verify get_version_dict returns a dict with the expected keys."""
     result = get_version_dict()
     assert isinstance(result, dict)
-    assert set(result.keys()) == {"major", "minor", "micro"}
+    assert {"major", "minor", "micro", "os_version"}.issubset(result.keys())
+
+
+def test_get_version_dict_os_version():
+    """Verify get_version_dict includes a non-empty os_version string."""
+    result = get_version_dict()
+    assert isinstance(result["os_version"], str)
+    assert len(result["os_version"]) > 0
 
 
 def test_get_version_dict_values_are_ints():

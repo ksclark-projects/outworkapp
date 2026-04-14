@@ -1,5 +1,6 @@
 import argparse
 import json
+import platform
 import sys
 
 
@@ -12,7 +13,12 @@ def get_version_string():
 def get_version_dict():
     """Return the current Python version as a dictionary."""
     v = sys.version_info
-    return {"major": v.major, "minor": v.minor, "micro": v.micro}
+    return {
+        "major": v.major,
+        "minor": v.minor,
+        "micro": v.micro,
+        "os_version": platform.platform(),
+    }
 
 
 if __name__ == "__main__":
