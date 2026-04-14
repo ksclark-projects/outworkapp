@@ -1,4 +1,5 @@
 import argparse
+import datetime
 import json
 import sys
 
@@ -12,7 +13,14 @@ def get_version_string():
 def get_version_dict():
     """Return the current Python version as a dictionary."""
     v = sys.version_info
-    return {"major": v.major, "minor": v.minor, "micro": v.micro}
+    now = datetime.datetime.now()
+    return {
+        "major": v.major,
+        "minor": v.minor,
+        "micro": v.micro,
+        "date": now.strftime("%Y-%m-%d"),
+        "time": now.strftime("%H:%M:%S"),
+    }
 
 
 if __name__ == "__main__":
