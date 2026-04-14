@@ -4,11 +4,11 @@ from main import get_version_dict, get_version_string
 
 
 def test_get_version_string_format():
-    """Verify get_version_string returns 'Python version: X.Y.Z'."""
+    """Verify get_version_string returns 'Python version: X.Y.Z | CPU usage: N%'."""
     result = get_version_string()
-    pattern = r"Python version: \d+\.\d+\.\d+"
+    pattern = r"Python version: \d+\.\d+\.\d+ \| CPU usage: \d+(\.\d+)?%"
     assert re.match(pattern, result), (
-        f"Expected format 'Python version: X.Y.Z', got: {result!r}"
+        f"Expected format 'Python version: X.Y.Z | CPU usage: N%', got: {result!r}"
     )
 
 
@@ -16,7 +16,9 @@ def test_get_version_dict_keys():
     """Verify get_version_dict returns a dict with the expected keys."""
     result = get_version_dict()
     assert isinstance(result, dict)
-    assert {"major", "minor", "micro", "os_version"}.issubset(result.keys())
+    assert {"major", "minor", "micro", "os_version", "cpu_usage"}.issubset(
+        result.keys()
+    )
 
 
 def test_get_version_dict_os_version():
@@ -27,11 +29,18 @@ def test_get_version_dict_os_version():
 
 
 def test_get_version_dict_values_are_ints():
-    """Verify get_version_dict values are all integers."""
+    """Verify get_version_dict version values are all integers."""
     result = get_version_dict()
     assert isinstance(result["major"], int)
     assert isinstance(result["minor"], int)
     assert isinstance(result["micro"], int)
+
+
+def test_get_version_dict_cpu_usage():
+    """Verify get_version_dict includes a valid cpu_usage float."""
+    result = get_version_dict()
+    assert isinstance(result["cpu_usage"], float)
+    assert 0.0 <= result["cpu_usage"] <= 100.0
 
 
 def test_get_version_dict_matches_version_string():
